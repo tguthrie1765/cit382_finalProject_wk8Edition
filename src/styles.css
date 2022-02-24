@@ -1,0 +1,55 @@
+body {
+  background-color: #fbe021;
+}
+
+.Home {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.text {
+  height: 150px;
+  width: 300px;
+  border: 1px solid #ccc;
+  font: 16px/26px Georgia, Garamond, Serif;
+  overflow: auto;
+  position: relative;
+  display: inline-block;
+}
+
+.LibrarySearch {
+  font-size: 40px;
+  font-family: Helvetica;
+  font-weight: bold;
+  background-color: #104735;
+  margin-left: 90px;
+  margin-right: 90px;
+  padding: 25px;
+  border-radius: 50%;
+}
+
+.wrap {
+  display: flex;
+  transform: translate(17%);
+}
+
+.mGlass {
+  background-color: grey;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.input {
+  font-size: 20px;
+}
+
+.UO {
+  margin-top: 50px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  background-color: grey;
+  font-size: 21px;
+}
