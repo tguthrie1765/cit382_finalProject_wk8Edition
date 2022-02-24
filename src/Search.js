@@ -13,7 +13,7 @@ export default function Search() {
 
   return (
     <div className="Home">
-      <h1 className="LibrarySearch">LibrarySearch</h1>
+      <h1 className="LibrarySearch">Library Search</h1>
       <p>Search for books by keyword, title, or author</p>
       <br />
       <Inputs
@@ -120,14 +120,17 @@ function SearchResults(props) {
   console.log(valueDrop);
   console.log("DATA=", data);
   return (
-    <fieldset className="text">
-      {data.map((book, index) => (
-        <div key={index}>
-          <li>
-            {book.Title}, {book.Author}
-          </li>
-        </div>
-      ))}
-    </fieldset>
+    <>
+      <h3>Results</h3>
+      <fieldset className="text">
+        {data.map((book, index) => (
+          <div key={index}>
+            <li>
+              {book.Title}, {book.Author}
+            </li>
+          </div>
+        ))}
+      </fieldset>
+    </>
   );
 }
