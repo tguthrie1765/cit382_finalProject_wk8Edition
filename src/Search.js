@@ -10,6 +10,7 @@ export default function Search() {
   const [valueSearch, setValueSerach] = useState("");
   const [valueDrop, setValueDrop] = useState("");
   const [display, setDisplay] = useState(false);
+  console.log("dropValue===", valueDrop);
 
   return (
     <div className="Home">
@@ -50,10 +51,16 @@ function Inputs(props) {
   }
   return (
     <div>
-      <select name="dropdown" onChange={setSelection} className="dropdown">
-        <option value="keyword">Keyword</option>
-        <option value="title">Title</option>
-        <option value="author">Author</option>
+      <select
+        name="dropdown"
+        onChange={(event) => {
+          setSelection(event.target.value);
+        }}
+        className="dropdown"
+      >
+        <option value="Keyword">Keyword</option>
+        <option value="Title">Title</option>
+        <option value="Author">Author</option>
       </select>
       <input
         type="text"
