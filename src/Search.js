@@ -10,7 +10,9 @@ export default function Search() {
   const [valueSearch, setValueSerach] = useState("");
   const [valueDrop, setValueDrop] = useState("");
   const [display, setDisplay] = useState(false);
+  const [bookResults, setBookResults] = useState({});
   console.log("dropValue===", valueDrop);
+  console.log("book result===", bookResults);
 
   return (
     <div className="Home">
@@ -21,9 +23,14 @@ export default function Search() {
         setValueSerach={setValueSerach}
         setValueDrop={setValueDrop}
         setDisplay={setDisplay}
+        setBookResults={setBookResults}
       />
       {display ? (
-        <SearchResults valueSearch={valueSearch} valueDrop={valueDrop} />
+        <SearchResults
+          valueSearch={valueSearch}
+          valueDrop={valueDrop}
+          bookResults={bookResults}
+        />
       ) : (
         <img className="UO" src="UO.png" alt="UO" />
       )}
@@ -32,9 +39,7 @@ export default function Search() {
 }
 
 function Inputs(props) {
-  const { setValueSerach } = props;
-  const { setValueDrop } = props;
-  const { setDisplay } = props;
+  const { setBookResults, setValueSerach, setValueDrop, setDisplay } = props;
   const [selection, setSelection] = useState("Keyword");
   const [input, setInput] = useState("");
   const [select, setSelect] = useState("");
@@ -44,6 +49,21 @@ function Inputs(props) {
     //else lift the state
     setValueSerach(input);
     setValueDrop(selection);
+    getBooks(selection, input)
+      .then((data) => setBookResults(data))
+      .catch((err) => console.log(err));
+  }
+
+  async function getBooks(valueDrop, valueSearch) {
+    let url = "https://openlibrary.org/search.json?";
+    let value = valueSearch.split(" ").join("+");
+    if (valueDrop === "Title") {
+      url = url + "title=" + value;
+    } else {
+      url = url + "author=" + value;
+    }
+    const books = await fetch(url);
+    return books.json();
   }
 
   function setTheDisplay() {
@@ -123,20 +143,23 @@ export function searchByKeyword(data = [], keyword = "", value = "") {
 function SearchResults(props) {
   const { valueDrop = "keyword" } = props;
   const { valueSearch = "" } = props;
-  let data = searchByKeyword(bookData, valueDrop, valueSearch);
+  const { bookResults } = props;
+  let data = bookResults;
   console.log(valueDrop);
   console.log("DATA=", data);
   return (
     <>
       <h3>Results</h3>
       <fieldset className="text">
-        {data.map((book, index) => (
-          <div key={index}>
-            <li>
-              {book.Title}, {book.Author}
-            </li>
-          </div>
-        ))}
+        {data.docs
+          ? data.docs.map((book, index) => (
+              <div key={index}>
+                <li>
+                  {book.title}, {book.author_name}, {book.first_publish_year}
+                </li>
+              </div>
+            ))
+          : null}
       </fieldset>
     </>
   );
